@@ -19,10 +19,11 @@ $(document).ready(function() {
         $("#loading_img").hide();
         this.discard();
       }).fail(function(status_code, error_message, response) {
-        $("#upload_status").html("Upload failed with status " + status_code + " (" + error_message + ")");
-        $("#upload_result").html(response);
+        $("#upload_status").html("No face found by Camera ");
+        // $("#upload_result").html(response);
         $("#loading_img").hide();
       });
+      document.getElementById('photo_id').value = '';
     };
 
     // Compare the photographed image to the current Rekognition collection
@@ -35,19 +36,19 @@ $(document).ready(function() {
         if (data.id !== undefined) {
           $("#upload_result").html(data.message + ": " + data.id + ", Confidence: " + data.confidence);
           // create speech response
-          window.location.replace("/questions?"+data.id)
-          $.post("/speech", {tosay: "Good " + greetingTime(moment()) + " " + data.id}, function(response) {
-            $("#audio_speech").attr("src", "data:audio/mpeg;base64," + response);
-            $("#audio_speech")[0].play();
-          });
+          // window.location.replace("/questions?"+data.id)
+          // $.post("/speech", {tosay: "Good " + greetingTime(moment()) + " " + data.id}, function(response) {
+          //   $("#audio_speech").attr("src", "data:audio/mpeg;base64," + response);
+          //   $("#audio_speech")[0].play();
+          // });
         } else {
           $("#upload_result").html(data.message);
         }
         $("#loading_img").hide();
         this.discard();
       }).fail(function(status_code, error_message, response) {
-        $("#upload_status").html("Upload failed with status " + status_code + " (" + error_message + ")");
-        $("#upload_result").html(response);
+        $("#upload_status").html("No face found by Camera ");
+        // $("#upload_result").html(response);
         $("#loading_img").hide();
       });
     };
@@ -80,7 +81,6 @@ $(document).ready(function() {
       shutter_mp3_url: "js/jpeg_camera/shutter.mp3",
       swf_url: "js/jpeg_camera/jpeg_camera.swf"
     }
-
 
     camera = new JpegCamera("#camera", options).ready(function(info) {
       $("#loading_img").hide();

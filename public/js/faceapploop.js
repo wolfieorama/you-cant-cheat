@@ -1,23 +1,28 @@
 $(document).ready(function() {
-
   if (window.JpegCamera) {
-
     var camera; // placeholder
     var cheat_count = 0;
 
-
-
-    // Compare the photographed image to the current Rekognition collection
-    //var compare_image =
+    // function tempAlert(msg,duration)
+    // {
+    //  var el = document.createElement("div");
+    //  el.setAttribute("style","position:absolute;top:40%;left:20%;background-color:white;");
+    //  el.innerHTML = msg;
+    //  setTimeout(function(){
+    //   el.parentNode.removeChild(el);
+    //  },duration);
+    //  document.body.appendChild(el);
+    // }
     function compare_image() {
       //console.log("Compare image is called "+window.location.search.substring(1));
       var test_taker = window.location.search.substring(1);
+      $("#header_quiz").html("Welcome to your Quiz, " + test_taker);
       var snapshot = camera.capture();
       var api_url = "/compare";
-      //$("#loading_img").show();
       if(cheat_count >= 3){
-        window.location.replace("/")
         alert("CHEATER !!!")
+        sleep(4000)
+        window.location.replace("/")
       }
       snapshot.upload({api_url: api_url}).done(function(response) {
         var data = JSON.parse(response);
@@ -31,14 +36,7 @@ $(document).ready(function() {
           else{
             cheat_count+=1
             console.log("Hey "+data.id+" why are you cheating!!!!!!!!!!!!");
-
           }
-          // create speech response
-        //  window.location.replace("/questions")
-          // $.post("/speech", {tosay: "Good " + greetingTime(moment()) + " " + data.id}, function(response) {
-          //   $("#audio_speech").attr("src", "data:audio/mpeg;base64," + response);
-          //   $("#audio_speech")[0].play();
-          // });
         } else {
           cheat_count+=1
           console.log("Users not found");
@@ -47,20 +45,23 @@ $(document).ready(function() {
         $("#loading_img").hide();
         this.discard();
       }).fail(function(status_code, error_message, response) {
-        $("#upload_status").html("Upload failed with status " + status_code + " (" + error_message + ")");
+        cheat_count+=1
+        $("#upload_status").html("No face found by Camera ");
         $("#upload_result").html(response);
         $("#loading_img").hide();
       });
     };
 
-
-    // var timer = function getRandomInt() {
-    //     return Math.floor(Math.random() * 16) + 5;
-    // }
-    // Define what the button clicks do.
+    function sleep(milliseconds) {
+      var start = new Date().getTime();
+      for (var i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds){
+          break;
+        }
+      }
+    }
 
     setInterval(compare_image, 6000);
-    //$("#compare_image").click(compare_image);
 
     // Initiate the camera widget on screen
     var options = {

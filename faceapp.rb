@@ -22,7 +22,6 @@ get '/' do
   erb :faceapp
 end
 
-
 post '/upload/:photoid' do
   client = Aws::Rekognition::Client.new()
   response = client.index_faces({
@@ -34,7 +33,6 @@ post '/upload/:photoid' do
   })
   "Image uploaded safely!"
 end
-
 
 post '/compare' do
   content_type :json
@@ -56,18 +54,6 @@ post '/compare' do
     {:id => response.face_matches[0].face.external_image_id, :confidence => response.face_matches[0].face.confidence, :message => "Face found!"}.to_json
   end
 end
-
-
-post '/speech' do
-  client = Aws::Polly::Client.new()
-  response = client.synthesize_speech({
-    output_format: "mp3",
-    voice_id: "Joanna",
-    text: params[:tosay]
-  })
-  Base64.encode64(response.audio_stream.string)
-end
-
 
 get '/collection/:action' do
   client = Aws::Rekognition::Client.new()
