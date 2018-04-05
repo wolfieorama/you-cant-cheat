@@ -3,7 +3,10 @@ $(document).ready(function() {
   if (window.JpegCamera) {
 
     var camera; // placeholder
-
+    // $("#compare_image").hide();
+    // $("#recordFor5").hide();
+    // $('#photo_id').hide();
+    // $('#add_to_collection').hide();
     // Add the photo taken to the current Rekognition collection for later comparison
     var add_to_collection = function() {
       var photo_id = $("#photo_id").val();
@@ -20,7 +23,7 @@ $(document).ready(function() {
         this.discard();
       }).fail(function(status_code, error_message, response) {
         $("#upload_status").html("No face found by Camera ");
-        $("#upload_result").html(response);
+        // $("#upload_result").html(response);
         $("#loading_img").hide();
       });
       document.getElementById('photo_id').value = '';
@@ -30,6 +33,10 @@ $(document).ready(function() {
     var compare_image = function() {
       var snapshot = camera.capture();
       var api_url = "/compare";
+      $("#compare_image").hide();
+      $("#recordFor5").hide();
+      $('#photo_id').hide();
+      $('#add_to_collection').hide();
       $("#loading_img").show();
       snapshot.upload({api_url: api_url}).done(function(response) {
         var data = JSON.parse(response);
@@ -43,7 +50,7 @@ $(document).ready(function() {
         this.discard();
       }).fail(function(status_code, error_message, response) {
         $("#upload_status").html("No face found by Camera ");
-        $("#upload_result").html(response);
+        // $("#upload_result").html(response);
         $("#loading_img").hide();
       });
     };
