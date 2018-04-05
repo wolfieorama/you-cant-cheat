@@ -8,3 +8,4 @@ end
 gem 'aws-sdk'
 gem 'dotenv'
 gem 'sinatra'
+gem 'voice_id'
