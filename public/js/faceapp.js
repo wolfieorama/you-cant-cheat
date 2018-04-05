@@ -3,11 +3,6 @@ $(document).ready(function() {
   if (window.JpegCamera) {
 
     var camera; // placeholder
-    // $("#compare_image").hide();
-    // $("#recordFor5").hide();
-    // $('#photo_id').hide();
-    // $('#add_to_collection').hide();
-    // Add the photo taken to the current Rekognition collection for later comparison
     var add_to_collection = function() {
       var photo_id = $("#photo_id").val();
       if (!photo_id.length) {
