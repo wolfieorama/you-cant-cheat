@@ -20,7 +20,7 @@ $(document).ready(function() {
         this.discard();
       }).fail(function(status_code, error_message, response) {
         $("#upload_status").html("No face found by Camera ");
-        // $("#upload_result").html(response);
+        $("#upload_result").html(response);
         $("#loading_img").hide();
       });
       document.getElementById('photo_id').value = '';
@@ -43,7 +43,7 @@ $(document).ready(function() {
         this.discard();
       }).fail(function(status_code, error_message, response) {
         $("#upload_status").html("No face found by Camera ");
-        // $("#upload_result").html(response);
+        $("#upload_result").html(response);
         $("#loading_img").hide();
       });
     };
